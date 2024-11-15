@@ -11,12 +11,7 @@
 ## **Mise en place du projet**
 
 ### **1. Créer un nouveau projet Scala/SBT**
-Commencez par créer un nouveau projet en utilisant le terminal :
-
-```bash
-mkdir flights_project
-cd flights_project
-```
+Commencez par créer un nouveau projet Spark/Scala/Sbt :
 
 ### **2. Configuration du fichier `build.sbt`**
 Créez un fichier nommé `build.sbt` et copiez-y le contenu suivant :
@@ -25,7 +20,7 @@ Créez un fichier nommé `build.sbt` et copiez-y le contenu suivant :
 name := "flights" // Nom du projet
 version := "0.1" // Version de l'application
 scalaVersion := "2.12.18" // Version de Scala
-organization := "com.osekoo.dev"
+organization := "com.miasd.dev"
 
 val sparkVersion = "3.5.2"
 
@@ -130,6 +125,7 @@ spark-submit \
     "flights_2.12-0.1.jar" \
     "data"
 ```
+- Copiez ce fichier sur le serveur
 
 ### **5. Compiler le projet**
 Dans le terminal, exécutez :
@@ -138,7 +134,8 @@ Dans le terminal, exécutez :
 sbt package
 ```
 
-Le fichier JAR sera généré dans `target/scala-2.12/`.
+- Le fichier JAR sera généré dans `target/scala-2.12/`.
+- Copiez le ficher JAR sur le cluster
 
 ---
 
@@ -155,6 +152,8 @@ Le fichier JAR sera généré dans `target/scala-2.12/`.
    - `data/flights/` : fichiers CSV de vols.
    - `data/weather/` : fichiers TXT de météo.
    - `data/airport/` : fichiers CSV d'aéroports.
+  
+3. Copiez ces données sur le cluster en conservant la structure des répertoires
 
 ---
 
