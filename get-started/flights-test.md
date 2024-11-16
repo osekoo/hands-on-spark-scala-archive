@@ -114,8 +114,8 @@ spark-submit \
     --executor-memory 2G \
     --num-executors 2 \
     --class "Main" \
-    "flights_2.12-0.1.jar" \
-    "target/scala-2.12/scala-2.12/data"
+    "target/scala-2.12/flights_2.12-0.1.jar" \
+    "data"
 ```
 
 #### **c) Version pour le cluster**
