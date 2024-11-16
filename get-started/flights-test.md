@@ -58,20 +58,28 @@ object Main {
     val weatherPath = dataRootDir + "/weather/*.txt"
     val airportPath = dataRootDir + "/airport/*.csv"
 
+    println("Loading flight data from: " + flightPath)
     val flightData = spark.read.option("header", "true").option("inferSchema", "true").csv(flightPath)
     flightData.show(10)
 
+    println("Loading weather data from: " + weatherPath)
     val weatherData = spark.read.option("header", "true").option("inferSchema", "true").csv(weatherPath)
     weatherData.show(10)
 
+    println("Loading airport data from: " + airportPath)
     val airportData = spark.read.option("header", "true").option("inferSchema", "true").csv(airportPath)
     airportData.show(10)
 
+    println("Saving flight data to parquet format")
     flightData.write.mode("overwrite").parquet(dataRootDir + "/flights.parquet")
+
+    println("Saving weather data to parquet format")
     weatherData.write.mode("overwrite").parquet(dataRootDir + "/weather.parquet")
+
+    println("Saving airport data to parquet format")
     airportData.write.mode("overwrite").parquet(dataRootDir + "/airport.parquet")
 
-    println("Conversion terminée.")
+    println("Session terminée.")
     spark.stop()
   }
 }
