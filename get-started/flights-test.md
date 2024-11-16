@@ -133,7 +133,7 @@ spark-submit \
     "flights_2.12-0.1.jar" \
     "data"
 ```
-- Copiez ce fichier sur le serveur
+- Copiez ce fichier sur le serveur.
 
 ### **5. Compiler le projet**
 Dans le terminal, exécutez :
@@ -143,13 +143,13 @@ sbt package
 ```
 
 - Le fichier JAR sera généré dans `target/scala-2.12/`.
-- Copiez le ficher JAR sur le cluster
+- Copiez le ficher JAR sur le cluster dans le même répertoire que `spark-run.sh`.
 
 ---
 
 ## **Architecture des données en local et sur le cluster**
 
-1. Créez un répertoire pour stocker les données :
+1. Créez dans le répertoire où vous avez copié les fichiers `spark-run.sh` et le `JAR` un répertoire pour stocker les données :
 
     ```bash
     mkdir -p data/flights data/weather data/airport
@@ -162,7 +162,16 @@ sbt package
    - `data/airport/` : fichiers CSV d'aéroports.
   
 3. Copiez ces données sur le cluster en conservant la structure des répertoires
-
+4. La structure de votre espace espace de travail doit ressembler à:
+```bash
+   flights_project/
+       - flights_2.12-0.1.jar
+       - spark-run.sh
+       - data/
+           - airport/
+           - fligths/
+           - weather/
+```
 ---
 
 ## **Transfert des données sur HDFS**
