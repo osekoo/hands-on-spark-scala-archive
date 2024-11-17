@@ -131,8 +131,9 @@ spark-submit \
     --num-executors 2 \
     --class "Main" \
     "flights_2.12-0.1.jar" \
-    "data"
+    "hdfs:///students/execiasd5_2024/<user_account>/data"
 ```
+- Remplacez `<user_account>` par votre login (e.g kklouvi, bhivert, sbeji, safanou, etc.)
 - Copiez ce fichier sur le serveur.
 
 ### **5. Compiler le projet**
@@ -180,24 +181,24 @@ sbt package
 Sur le cluster, exécutez :
 
 ```bash
-hdfs dfs -mkdir -p data/
+hdfs dfs -mkdir -p /students/execiasd5_2024/<user_account>/data/
 ```
 
 ### **2. Uploader les fichiers**
 Sur le cluster, exécutez :
 
 ```bash
-hdfs dfs -put data/* data/
+hdfs dfs -put data/* /students/execiasd5_2024/<user_account>/data/
 ```
 
 ### **3. Vérifier les données sur HDFS**
 Assurez-vous que les fichiers ont été correctement transférés :
 
 ```bash
-hdfs dfs -ls data
-hdfs dfs -ls data/flights/
-hdfs dfs -ls data/weather/
-hdfs dfs -ls data/airport/
+hdfs dfs -ls /students/execiasd5_2024/<user_account>/data
+hdfs dfs -ls /students/execiasd5_2024/<user_account>/data/flights/
+hdfs dfs -ls /students/execiasd5_2024/<user_account>/data/weather/
+hdfs dfs -ls /students/execiasd5_2024/<user_account>/data/airport/
 ```
 
 ---
