@@ -40,19 +40,21 @@ import org.apache.spark.sql.SparkSession
 object Main {
   def main(args: Array[String]): Unit = {
     val spark: SparkSession = SparkSession.builder()
-      .appName("flights")
+      .appName(s"flights")
       .getOrCreate()
 
     spark.sparkContext.setLogLevel("ERROR")
 
-    println("Arguments reçus : " + args.mkString(", "))
-    if (args.length < 1) {
-      println("Usage: Main <data-root-dir>")
+    println("args: " + args.mkString(", "))
+    if (args.length < 2) {
+      println("Usage: Main <data-root-dir> <output-dir>")
       System.exit(1)
     }
 
     val dataRootDir = args(0)
-    println("Répertoire des données : " + dataRootDir)
+    val outputDir = args(1)
+    println("Data root dir: " + dataRootDir)
+    println("Output dir: " + outputDir)
 
     val flightPath = dataRootDir + "/flights/*.csv"
     val weatherPath = dataRootDir + "/weather/*.txt"
@@ -70,19 +72,20 @@ object Main {
     val airportData = spark.read.option("header", "true").option("inferSchema", "true").csv(airportPath)
     airportData.show(10)
 
-    println("Saving flight data to parquet format")
-    flightData.write.mode("overwrite").parquet(dataRootDir + "/flights.parquet")
+    println("Saving flight data to parquet format to " + outputDir + "/flights.parquet")
+    flightData.write.mode("overwrite").parquet(outputDir + "/flights.parquet")
 
-    println("Saving weather data to parquet format")
-    weatherData.write.mode("overwrite").parquet(dataRootDir + "/weather.parquet")
+    println("Saving weather data to parquet format to " + outputDir + "/weather.parquet")
+    weatherData.write.mode("overwrite").parquet(outputDir + "/weather.parquet")
 
-    println("Saving airport data to parquet format")
-    airportData.write.mode("overwrite").parquet(dataRootDir + "/airport.parquet")
+    println("Saving airport data to parquet format to " + outputDir + "/airport.parquet")
+    airportData.write.mode("overwrite").parquet(outputDir + "/airport.parquet")
 
-    println("Session terminée.")
+    println("Done.")
     spark.stop()
   }
 }
+
 ```
 
 ### **4. Mettre en place l'exécuteur (`spark-run`)**
@@ -99,7 +102,8 @@ spark-submit ^
     --num-executors "1" ^
     --class "Main" ^
     "target/scala-2.12/flights_2.12-0.1.jar" ^
-    "data"
+    "data" ^
+    "output"
 ```
 
 #### **b) Version locale (Linux/Mac)**
@@ -115,7 +119,8 @@ spark-submit \
     --num-executors 2 \
     --class "Main" \
     "target/scala-2.12/flights_2.12-0.1.jar" \
-    "data"
+    "data" \
+    "output"
 ```
 
 #### **c) Version pour le cluster**
@@ -131,7 +136,8 @@ spark-submit \
     --num-executors 2 \
     --class "Main" \
     "flights_2.12-0.1.jar" \
-    "/students/execiasd5_2024/<user_account>/data"
+    "/students/execiasd5_2024/<user_account>/data"\
+    "/students/execiasd5_2024/<user_account>/output"
 ```
 - Remplacez `<user_account>` par votre login (e.g kklouvi, bhivert, sbeji, safanou, etc.)
 - Copiez ce fichier sur le serveur.
@@ -225,3 +231,7 @@ Connectez-vous au nœud principal du cluster et exécutez :
 ```bash
 ./spark-run.sh
 ```
+
+# Fichiers de sorties
+Les fichiers de sortie (parquet, etc.) doivent sauvegardés sur HDFS dans un autre répertoire nommé `output` passé en 2e argument de `spark-run.sh`.
+
