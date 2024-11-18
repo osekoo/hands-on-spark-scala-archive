@@ -131,7 +131,7 @@ spark-submit \
     --num-executors 2 \
     --class "Main" \
     "flights_2.12-0.1.jar" \
-    "hdfs:///students/execiasd5_2024/<user_account>/data"
+    "/students/execiasd5_2024/<user_account>/data"
 ```
 - Remplacez `<user_account>` par votre login (e.g kklouvi, bhivert, sbeji, safanou, etc.)
 - Copiez ce fichier sur le serveur.
